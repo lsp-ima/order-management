@@ -87,7 +87,7 @@
         <div class="row2">
           <div class="field">
             <label>学校</label>
-            <select id="r_school" onchange="onSchoolChange()"></select>
+            <select id="r_school"></select>
           </div>
           <div class="field">
             <label>部活動</label>
@@ -225,7 +225,7 @@ function init() {
     .then(masters => {
       MASTERS = masters;
       fillSelect('r_school', masters.schools);
-      onSchoolChange();
+      fillSelect('r_club', masters.clubs);
       fillSelect('r_item', masters.items);
       onItemChange();
       fillSelect('r_status', masters.statuses);
@@ -237,12 +237,6 @@ function init() {
 function fillSelect(id, list) {
   const el = document.getElementById(id);
   el.innerHTML = (list || []).map(v => `<option value="${v}">${v}</option>`).join('');
-}
-
-function onSchoolChange() {
-  const school = document.getElementById('r_school').value;
-  const clubs = (MASTERS.clubsBySchool[school] || []);
-  fillSelect('r_club', clubs);
 }
 
 function onItemChange() {
