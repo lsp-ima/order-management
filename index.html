@@ -12,7 +12,7 @@
   nav { display: flex; background: #fff; border-bottom: 1px solid #ddd; }
   nav button { flex: 1; padding: 12px; border: none; background: none; cursor: pointer; font-size: 14px; color: #555; border-bottom: 3px solid transparent; }
   nav button.active { color: #1565c0; border-bottom-color: #1565c0; font-weight: bold; }
-  main { padding: 16px; max-width: 1100px; margin: 0 auto; }
+  main { padding: 16px; max-width: 1150px; margin: 0 auto; }
   .panel { display: none; }
   .panel.active { display: block; }
   table { width: 100%; border-collapse: collapse; background: #fff; font-size: 13px; }
@@ -22,13 +22,18 @@
   tr.soon { background: #fff6d6; }
   .table-wrap { overflow-x: auto; max-height: 70vh; }
   .badge { padding: 2px 8px; border-radius: 10px; font-size: 12px; background: #e0e0e0; }
-  form.card { background: #fff; padding: 20px; border-radius: 6px; max-width: 640px; }
+  form.card { background: #fff; padding: 20px; border-radius: 6px; max-width: 720px; }
   .field { margin-bottom: 12px; }
   .field label { display: block; font-size: 12px; color: #666; margin-bottom: 4px; }
   .field input, .field select, .field textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  h3.section-title { font-size: 14px; color: #1565c0; margin: 18px 0 10px; border-bottom: 1px solid #dbe7f7; padding-bottom: 4px; }
+  .item-row { border: 1px solid #ddd; border-radius: 6px; padding: 14px; margin-bottom: 12px; background: #fafbfc; }
   button.primary { background: #1565c0; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; font-size: 14px; cursor: pointer; }
   button.primary:hover { background: #0d47a1; }
+  button.secondary { background: #fff; color: #1565c0; border: 1px solid #1565c0; padding: 8px 16px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+  button.danger { background: #fff; color: #c62828; border: 1px solid #c62828; padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; }
   .msg { margin-top: 10px; font-size: 13px; }
   .msg.ok { color: #2e7d32; }
   .msg.err { color: #c62828; }
@@ -74,7 +79,7 @@
           <thead>
             <tr>
               <th>発注すべき日</th><th>納期</th><th>学校</th><th>部活動</th><th>商品</th><th>メーカー</th>
-              <th>担当者</th><th>ステータス</th><th>連絡済み</th>
+              <th>アサスポ担当</th><th>メーカー担当</th><th>学校担当</th><th>ステータス</th><th>連絡済み</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -84,6 +89,7 @@
 
     <section id="register" class="panel">
       <form class="card" id="registerForm" onsubmit="submitRegister(event)">
+        <h3 class="section-title">案件情報</h3>
         <div class="row2">
           <div class="field">
             <label>学校</label>
@@ -94,65 +100,46 @@
             <select id="r_club"></select>
           </div>
         </div>
-        <div class="row2">
+        <div class="row3">
           <div class="field">
             <label>単位</label>
             <select id="r_unit"></select>
           </div>
           <div class="field">
             <label>名前(選手名・クラス名・学校名など)</label>
-            <input id="r_player" type="text">
+            <input id="r_name" type="text">
           </div>
           <div class="field">
             <label>人数(分かれば)</label>
-            <input id="r_teamCount" type="number" min="0">
+            <input id="r_count" type="number" min="0">
           </div>
         </div>
-        <div class="row2">
+        <div class="row3">
           <div class="field">
-            <label>商品</label>
-            <select id="r_item" onchange="onItemChange()"></select>
+            <label>アサスポ担当</label>
+            <input id="r_staffAsahi" type="text">
           </div>
           <div class="field">
-            <label>メーカー</label>
-            <select id="r_maker"></select>
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label>数量</label>
-            <input id="r_qty" type="number" min="1" value="1">
+            <label>メーカー担当</label>
+            <input id="r_staffMaker" type="text">
           </div>
           <div class="field">
-            <label>担当者</label>
-            <input id="r_staff" type="text">
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label>発注日(任意)</label>
-            <input id="r_orderDate" type="date">
-          </div>
-          <div class="field">
-            <label>リードタイム(日)</label>
-            <input id="r_leadTime" type="number" min="0">
-          </div>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label>納期</label>
-            <input id="r_deadline" type="date">
-          </div>
-          <div class="field">
-            <label>ステータス</label>
-            <select id="r_status"></select>
+            <label>学校担当</label>
+            <input id="r_staffSchool" type="text">
           </div>
         </div>
         <div class="field">
-          <label>備考</label>
-          <textarea id="r_note" rows="2"></textarea>
+          <label>案件備考</label>
+          <textarea id="r_caseNote" rows="2"></textarea>
         </div>
-        <button class="primary" type="submit">登録する</button>
+
+        <h3 class="section-title">商品明細（複数追加できます）</h3>
+        <div id="itemRows"></div>
+        <button type="button" class="secondary" onclick="addItemRow()">＋ 商品を追加</button>
+
+        <div style="margin-top:20px;">
+          <button class="primary" type="submit">登録する</button>
+        </div>
         <div id="registerMsg" class="msg"></div>
       </form>
     </section>
@@ -166,7 +153,7 @@
           <thead>
             <tr>
               <th>学校</th><th>部活動</th><th>単位</th><th>名前/人数</th><th>商品</th><th>メーカー</th>
-              <th>数量</th><th>担当者</th><th>納期</th><th>発注すべき日</th>
+              <th>数量</th><th>アサスポ担当</th><th>メーカー担当</th><th>学校担当</th><th>納期</th><th>発注すべき日</th>
               <th>ステータス</th><th>検品結果</th><th>連絡済み</th><th>備考</th>
             </tr>
           </thead>
@@ -224,59 +211,131 @@ function init() {
     .then(r => r.json())
     .then(masters => {
       MASTERS = masters;
-      fillSelect('r_school', masters.schools);
-      fillSelect('r_club', masters.clubs);
-      fillSelect('r_item', masters.items);
-      onItemChange();
-      fillSelect('r_status', masters.statuses);
-      fillSelect('r_unit', masters.units);
+      fillSelectEl(document.getElementById('r_school'), masters.schools);
+      fillSelectEl(document.getElementById('r_club'), masters.clubs);
+      fillSelectEl(document.getElementById('r_unit'), masters.units);
+      document.getElementById('itemRows').innerHTML = '';
+      addItemRow();
       reloadOrders();
     });
 }
 
-function fillSelect(id, list) {
-  const el = document.getElementById(id);
+function fillSelectEl(el, list) {
   el.innerHTML = (list || []).map(v => `<option value="${v}">${v}</option>`).join('');
 }
 
-function onItemChange() {
-  const item = document.getElementById('r_item').value;
-  const makers = (MASTERS.makersByItem[item] || []);
-  fillSelect('r_maker', makers);
+function val(id) { return document.getElementById(id).value; }
+
+function itemRowHtml() {
+  return `
+    <div class="row2">
+      <div class="field">
+        <label>商品</label>
+        <select class="it_item" onchange="onItemRowItemChange(this)"></select>
+      </div>
+      <div class="field">
+        <label>メーカー</label>
+        <select class="it_maker"></select>
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>数量</label>
+        <input class="it_qty" type="number" min="1" value="1">
+      </div>
+      <div class="field">
+        <label>発注日(任意)</label>
+        <input class="it_orderDate" type="date">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>リードタイム(日)</label>
+        <input class="it_leadTime" type="number" min="0">
+      </div>
+      <div class="field">
+        <label>納期</label>
+        <input class="it_deadline" type="date">
+      </div>
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label>ステータス</label>
+        <select class="it_status"></select>
+      </div>
+      <div class="field">
+        <label>商品備考</label>
+        <input class="it_note" type="text">
+      </div>
+    </div>
+    <button type="button" class="danger" onclick="removeItemRow(this)">－ この商品を削除</button>
+  `;
+}
+
+function addItemRow() {
+  const container = document.getElementById('itemRows');
+  const div = document.createElement('div');
+  div.className = 'item-row';
+  div.innerHTML = itemRowHtml();
+  container.appendChild(div);
+  const itemSelect = div.querySelector('.it_item');
+  fillSelectEl(itemSelect, MASTERS.items);
+  fillSelectEl(div.querySelector('.it_status'), MASTERS.statuses);
+  onItemRowItemChange(itemSelect);
+}
+
+function removeItemRow(btn) {
+  const rows = document.querySelectorAll('.item-row');
+  if (rows.length <= 1) { alert('商品は最低1つ必要です'); return; }
+  btn.closest('.item-row').remove();
+}
+
+function onItemRowItemChange(selectEl) {
+  const row = selectEl.closest('.item-row');
+  const makers = MASTERS.makersByItem[selectEl.value] || [];
+  fillSelectEl(row.querySelector('.it_maker'), makers);
 }
 
 function submitRegister(e) {
   e.preventDefault();
-  const data = {
-    school: document.getElementById('r_school').value,
-    club: document.getElementById('r_club').value,
-    unit: document.getElementById('r_unit').value,
-    player: document.getElementById('r_player').value,
-    teamCount: document.getElementById('r_teamCount').value,
-    item: document.getElementById('r_item').value,
-    maker: document.getElementById('r_maker').value,
-    qty: document.getElementById('r_qty').value,
-    staff: document.getElementById('r_staff').value,
-    orderDate: document.getElementById('r_orderDate').value,
-    leadTime: document.getElementById('r_leadTime').value,
-    deadline: document.getElementById('r_deadline').value,
-    status: document.getElementById('r_status').value,
-    note: document.getElementById('r_note').value
+  const caseData = {
+    school: val('r_school'), club: val('r_club'), unit: val('r_unit'),
+    name: val('r_name'), count: val('r_count'),
+    staffAsahi: val('r_staffAsahi'), staffMaker: val('r_staffMaker'), staffSchool: val('r_staffSchool'),
+    note: val('r_caseNote')
   };
+  const items = Array.from(document.querySelectorAll('.item-row')).map(row => ({
+    item: row.querySelector('.it_item').value,
+    maker: row.querySelector('.it_maker').value,
+    qty: row.querySelector('.it_qty').value,
+    orderDate: row.querySelector('.it_orderDate').value,
+    leadTime: row.querySelector('.it_leadTime').value,
+    deadline: row.querySelector('.it_deadline').value,
+    status: row.querySelector('.it_status').value,
+    note: row.querySelector('.it_note').value
+  }));
+
   const msg = document.getElementById('registerMsg');
   msg.textContent = '登録中...';
   msg.className = 'msg';
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action: 'addOrder', data })
+    body: JSON.stringify({ action: 'addCase', caseData, items })
   })
     .then(r => r.json())
     .then(res => {
       if (res.ok) {
         msg.textContent = '登録しました';
         msg.className = 'msg ok';
-        document.getElementById('registerForm').reset();
+        document.getElementById('r_name').value = '';
+        document.getElementById('r_count').value = '';
+        document.getElementById('r_staffAsahi').value = '';
+        document.getElementById('r_staffMaker').value = '';
+        document.getElementById('r_staffSchool').value = '';
+        document.getElementById('r_caseNote').value = '';
+        document.getElementById('itemRows').innerHTML = '';
+        addItemRow();
         reloadOrders();
       } else {
         msg.textContent = 'エラー: ' + (res.error || '不明なエラー');
@@ -318,7 +377,8 @@ function renderDashboard() {
     const cls = diff !== null && diff < 0 ? 'overdue' : (diff !== null && diff <= 3 ? 'soon' : '');
     return `<tr class="${cls}">
       <td>${o.shouldOrderDate}</td><td>${o.deadline}</td><td>${o.school}</td><td>${o.club}</td>
-      <td>${o.item}</td><td>${o.maker}</td><td>${o.staff}</td>
+      <td>${o.item}</td><td>${o.maker}</td>
+      <td>${o.staffAsahi||''}</td><td>${o.staffMaker||''}</td><td>${o.staffSchool||''}</td>
       <td><span class="badge">${o.status}</span></td><td>${o.contacted || ''}</td>
     </tr>`;
   }).join('');
@@ -331,8 +391,9 @@ function renderList() {
     const statusOptions = MASTERS.statuses.map(s => `<option value="${s}" ${s===o.status?'selected':''}>${s}</option>`).join('');
     return `<tr data-row="${o.row}">
       <td>${o.school}</td><td>${o.club}</td><td>${o.unit}</td>
-      <td>${o.player||''}${o.teamCount ? '('+o.teamCount+'人)' : ''}</td>
-      <td>${o.item}</td><td>${o.maker}</td><td>${o.qty}</td><td>${o.staff}</td>
+      <td>${o.name||''}${o.count ? '('+o.count+'人)' : ''}</td>
+      <td>${o.item}</td><td>${o.maker}</td><td>${o.qty}</td>
+      <td>${o.staffAsahi||''}</td><td>${o.staffMaker||''}</td><td>${o.staffSchool||''}</td>
       <td>${o.deadline}</td><td>${o.shouldOrderDate}</td>
       <td><select class="status-select" onchange="updateField(${o.row},'status',this.value)">${statusOptions}</select></td>
       <td><input type="text" value="${o.inspection||''}" style="width:80px" onchange="updateField(${o.row},'inspection',this.value)"></td>
@@ -354,7 +415,7 @@ function updateField(row, field, value) {
   fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action: 'updateOrder', row, data: order })
+    body: JSON.stringify({ action: 'updateItem', row, data: order })
   })
     .then(r => r.json())
     .then(() => reloadOrders());
